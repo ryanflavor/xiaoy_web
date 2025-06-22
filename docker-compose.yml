@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build:
+      context: .
+      dockerfile: apps/api-gateway/Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - HOST=0.0.0.0
+      - PORT=3001
+      - LOG_LEVEL=debug
+      - CORS_ORIGIN=http://localhost:3000
+      - JWT_SECRET=development-secret-change-in-production
+      - ZMQ_BROKER_URL=tcp://localhost:5555
+      - ZMQ_BROKER_TIMEOUT=5000
+      - ENABLE_PYTHON_SUBPROCESS=true
+      - PYTHON_EXECUTABLE=/usr/bin/python3
+    volumes:
+      - ./apps/api-gateway/src:/app/apps/api-gateway/src
+      - ./packages:/app/packages
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  web-frontend:
+    build:
+      context: .
+      dockerfile: apps/web-frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_GATEWAY_URL=http://localhost:3001
+      - NEXT_PUBLIC_WEBSOCKET_URL=ws://localhost:3001
+    depends_on:
+      - api-gateway
+    volumes:
+      - ./apps/web-frontend/src:/app/apps/web-frontend/src
+      - ./apps/web-frontend/public:/app/apps/web-frontend/public
+      - ./packages:/app/packages
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/', (res) => { process.exit(res.statusCode === 200 ? 0 : 1); })"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+  # ZMQ Mock Broker (for development if real system unavailable)
+  zmq-mock-broker:
+    image: python:3.11-slim
+    volumes:
+      - ./docs/appendices/rpc:/app/rpc
+    working_dir: /app
+    command: python -m rpc.mdp.mdbroker
+    ports:
+      - "5555:5555"
+    environment:
+      - PYTHONUNBUFFERED=1
+    profiles:
+      - mock-services
+
+volumes:
+  node_modules:
