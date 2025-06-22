@@ -19,8 +19,8 @@ core-project-information:
   #   architectureShardedLocation: docs/architecture
   customTechnicalDocuments: null # list other documents only if you want the SM to read them when creating stories
   devLoadAlwaysFiles:
-    - docs/architecture/coding-standards.md
-    - docs/architecture/tech-stack.md
-    - docs/architecture/project-structure.md
+    - docs/architecture/coding-standards-and-conventions.md
+    - docs/architecture/tech-stack-alignment.md
+    - docs/architecture/source-tree-integration.md
   devDebugLog: .ai/debug-log.md
   agentCoreDump: .ai/core-dump{n}.md
