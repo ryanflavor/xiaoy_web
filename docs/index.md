@@ -30,6 +30,14 @@
 - [需求文档](./prd/requirements.md)
 - [技术约束和集成需求](./prd/technical-constraints-and-integration-requirements.md)
 
+### 指令解析文档 🎯
+- [**指令解析文档套件**](./instruction-parsing/) - 完整的指令解析实现指南
+  - [业务逻辑分析](./instruction-parsing/analysis.md) - 5种解析器类型的完整分析
+  - [TypeScript实现指南](./instruction-parsing/typescript-guide.md) - 生产就绪的代码示例
+  - [测试数据集](./instruction-parsing/test-datasets.json) - 85+测试用例
+  - [验证框架](./instruction-parsing/validation-framework.md) - Python-TypeScript一致性测试
+  - [边界情况处理](./instruction-parsing/edge-cases.md) - 全面的边界条件分析
+
 ### 技术参考
 - [指令解析 Python 实现](./appendices/instructions/) - 4种指令类型的参考实现
 - [ZeroMQ RPC 协议](./appendices/rpc/mdp/) - 现有通信协议实现

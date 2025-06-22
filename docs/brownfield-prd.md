@@ -17,7 +17,8 @@
 - [x] API Documentation - ZMQ Majordomo RPC协议完整实现
 - [x] External API Documentation - 期权交易所API和行情数据源
 - [x] UX/UI Guidelines - 基于Shadcn/ui的现代化设计系统
-- [x] Other: **指令解析Python参考实现** (4种核心指令类型)
+- [x] Other: **指令解析Python参考实现** (5种核心指令类型)
+- [x] **指令解析完整技术文档** - [完整文档套件](./instruction-parsing/) 包含85+测试用例、TypeScript实现指南、验证框架
 
 ### Enhancement Scope Definition
 
@@ -35,7 +36,7 @@
 #### Goals
 
 - 构建现代化Web前端，完全复刻现有桌面应用的核心功能
-- 实现指令解析的前端版本，与Python参考实现保持100%一致性
+- 实现指令解析的前端版本，与Python参考实现保持100%一致性（参考[指令解析文档套件](./instruction-parsing/)获取完整实现指南）
 - 通过API网关无缝集成现有ZMQ/Pickle协议，确保后端零修改
 - 提供实时账户监控、算法执行跟踪和桌面通知功能
 - 达到或超越现有桌面应用的性能和用户体验标准

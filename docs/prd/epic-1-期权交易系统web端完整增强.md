@@ -4,6 +4,12 @@
 
 **Integration Requirements**: API网关必须完全兼容ZMQ Majordomo协议，前端指令解析必须与Python参考实现保持100%一致性，实时数据流必须确保低延迟和高可靠性。
 
+#### 🎯 核心技术文档
+- **[指令解析完整文档套件](../instruction-parsing/)** - Epic 1的核心业务逻辑实现指南
+  - 包含5种指令解析器的完整技术规范
+  - 提供85+测试用例和Python-TypeScript一致性验证框架
+  - 详细的实施路线图和成功指标定义
+
 ### Story 1.1: API网关核心框架构建
 
 As a **开发者**,
@@ -50,20 +56,39 @@ As a **交易员**,
 I want **在Web界面中输入自然语言交易指令，并实时看到解析结果**,
 so that **我能确认系统正确理解我的交易意图，避免下单错误**。
 
+#### 📋 技术规范文档
+**完整实现指南**: [指令解析文档套件](../instruction-parsing/)
+- **[业务逻辑分析](../instruction-parsing/analysis.md)** - 5种解析器类型的完整分析
+- **[TypeScript实现指南](../instruction-parsing/typescript-guide.md)** - 生产就绪的代码示例
+- **[测试数据集](../instruction-parsing/test-datasets.json)** - 85+测试用例覆盖
+- **[验证框架](../instruction-parsing/validation-framework.md)** - Python-TypeScript一致性测试
+- **[边界情况处理](../instruction-parsing/edge-cases.md)** - 全面的边界条件分析
+- **[Story 1.3集成指南](../instruction-parsing/story-1.3-integration.md)** - 开发实施路线图
+
 #### Acceptance Criteria
 
-- AC1: 实现4种指令类型的TypeScript解析逻辑（Vega、单向Delta、双向Delta、平仓）
+- AC1: 实现5种指令类型的TypeScript解析逻辑（Vega、单向Delta、双向Delta、固定执行价Delta、平仓指令）
 - AC2: 指令输入框支持实时解析预览，键入时即时显示结果
-- AC3: 解析结果格式与Python参考实现完全一致
-- AC4: 支持所有Python版本中的关键词和简化映射规则
-- AC5: 建立自动化测试套件，验证与Python实现的一致性
+- AC3: 解析结果格式与Python参考实现完全一致（通过85+测试用例验证）
+- AC4: 支持所有Python版本中的关键词、简化映射规则和"各"关键字逻辑
+- AC5: 建立自动化测试套件，验证与Python实现的一致性（包含Python验证服务器）
+- AC6: 实现完整的边界条件和错误处理（参考edge-cases.md文档）
+- AC7: 达到性能目标：指令解析<100ms，目标<50ms
 
 #### Integration Verification
 
-- IV1: 确认前端解析逻辑与Python参考实现100%一致，通过对照测试框架验证
-- IV2: 验证解析性能满足实时交互要求（<100ms）
-- IV3: 确保解析错误处理与现有系统行为一致
+- IV1: 确认前端解析逻辑与Python参考实现100%一致，通过对照测试框架验证（61个原始测试用例+24个边界条件测试）
+- IV2: 验证解析性能满足实时交互要求（<100ms响应时间）
+- IV3: 确保解析错误处理与现有系统行为一致，提供清晰的用户错误提示
 - IV4: Python验证服务器与TypeScript测试套件集成测试通过
+- IV5: 验证复杂分布逻辑（目标扩展、"各"关键字、多维数组配对）
+- IV6: 确认所有5种解析器类型的字符串变换逻辑与Python完全一致
+
+#### 📊 成功指标
+- **解析准确性**: 100%与Python参考实现一致性
+- **性能指标**: <100ms解析时间（目标<50ms）
+- **测试覆盖**: 100%通过85+测试用例
+- **错误处理**: 优雅处理所有无效输入场景
 
 ### Story 1.4: 账户监控与选择功能
 
@@ -91,19 +116,27 @@ As a **交易员**,
 I want **在下单前查看详细的订单预览表格，包含所有关键参数和风险指标**,
 so that **我能在执行前全面评估交易的风险和收益**。
 
+#### 🔗 依赖关系
+**前置条件**: Story 1.3 (指令解析引擎) 必须完成
+**数据来源**: 使用Story 1.3解析后的指令数据生成预览表格
+**参考文档**: [指令解析文档套件](../instruction-parsing/) - 了解解析后数据格式
+
 #### Acceptance Criteria
 
 - AC1: 综合预览表格包含所有必需字段：合约名称、VolM、方向、时间、档位、数量、价格、Margin、CashD、CashV
 - AC2: 实现希腊值计算和显示（Delta、Gamma、Theta、Vega）
 - AC3: 计算并显示所有选中账户的综合风险度百分比
-- AC4: 预览数据基于当前选择的账户和解析的指令动态生成
-- AC5: 提供确认下单按钮和最终风险提示
+- AC4: 预览数据基于当前选择的账户和Story 1.3解析的指令动态生成
+- AC5: 支持所有5种指令类型的预览（Vega、单向Delta、双向Delta、固定执行价Delta、平仓指令）
+- AC6: 提供确认下单按钮和最终风险提示
+- AC7: 实时更新预览表格当指令输入或账户选择变化时
 
 #### Integration Verification
 
 - IV1: 确认风险计算与现有风控模块算法保持一致
 - IV2: 验证预览数据准确性，与实际下单结果匹配
 - IV3: 确保预览性能满足实时交易决策要求
+- IV4: 验证与Story 1.3解析结果的正确集成（支持所有指令类型和边界条件）
 
 ### Story 1.6: 实时算法监控与控制
 

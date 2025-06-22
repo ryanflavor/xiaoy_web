@@ -1,0 +1,296 @@
+{
+  "metadata": {
+    "title": "Comprehensive Instruction Parsing Test Datasets",
+    "description": "Complete test case collection for all 5 instruction parsing engines with edge cases and boundary conditions",
+    "version": "1.0",
+    "totalTestCases": 85,
+    "parsers": 5,
+    "createdDate": "2025-06-22",
+    "purpose": "Ensure 100% TypeScript-Python compatibility for financial trading instruction parsing"
+  },
+  
+  "vegaInstructions": {
+    "description": "Volatility trading strategies using 双买/双卖 actions",
+    "pattern": "[action] [targets] [months] [exposures] 的v",
+    "outputFormat": "{target} {month} {exposure} {action}vega",
+    "originalTestCases": {
+      "50 双卖 当月 万1 的v": ["沪50 当月 万1 双卖vega"],
+      "双卖 深500 万0.5 的v": ["深500 当月 万0.5 双卖vega"],
+      "双买 500 下月 万1 的v": ["沪500 下月 万1 双买vega"],
+      "双卖500  创业板当月各万0.5 的v": ["沪500 当月 万0.5 双卖vega", "创业板 当月 万0.5 双卖vega"],
+      "双卖500  创业板当月万1 的v": ["沪500 当月 万1 双卖vega", "创业板 当月 万1 双卖vega"],
+      "双买 500 当月和下月 各万0.5 的v": ["沪500 当月 万0.5 双买vega", "沪500 下月 万0.5 双买vega"],
+      "创业板 双卖 当月和下月 万1 1.5 的v": ["创业板 当月 万1 双卖vega", "创业板 下月 万1.5 双卖vega"],
+      "双卖 500 下月 万1 0.5的v": ["沪500 下月 万1 双卖vega", "深500 下月 万0.5 双卖vega"],
+      "创业板 双买 下月 买万1的v": ["创业板 下月 万1 双买vega"],
+      "双卖 500 创业板 当月 万1 0.5 1 的v": ["沪500 当月 万1 双卖vega", "深500 当月 万0.5 双卖vega", "创业板 当月 万1 双卖vega"],
+      "IM 双卖 当月 千1 的v": ["IM 当月 千1 双卖vega"]
+    },
+    "additionalEdgeCases": {
+      "双买 50 万1 的v": ["沪50 当月 万1 双买vega"],
+      "双卖 300 千0.5 的v": ["沪300 当月 千0.5 双卖vega"],
+      "80 双买 隔季 万2 的v": ["科创80 隔季 万2 双买vega"],
+      "双卖 100 当月和下月 各千1 的v": ["深100 当月 千1 双卖vega", "深100 下月 千1 双卖vega"],
+      "科创50 科创80 双买 当月 万0.5 万1 的v": ["科创50 当月 万0.5 双买vega", "科创80 当月 万1 双买vega"],
+      "双卖 500 当月下月下季 万1 万0.5 万2 的v": ["沪500 当月 万1 双卖vega", "沪500 下月 万0.5 双卖vega", "沪500 下季 万2 双卖vega"],
+      "IH IF IC 双买 当月 万1 万0.5 万2 的v": ["IH 当月 万1 双买vega", "IF 当月 万0.5 双买vega", "IC 当月 万2 双买vega"]
+    },
+    "errorScenarios": {
+      "500 买 万1 的c": "Error: Missing 双买/双卖 action",
+      "双买 500 万1": "Error: Missing 的v indicator",
+      "双卖 万1 的v": "Error: Missing target",
+      "双买 500 的v": "Error: Missing exposure"
+    }
+  },
+
+  "singleSideDelta": {
+    "description": "Basic directional option trades with call/put determination",
+    "pattern": "[action] [targets] [months] [exposures] 的c/p",
+    "outputFormat": "{target} {month} {exposure} {action}{option_type}",
+    "originalTestCases": {
+      "50  300  卖出 当月 万1 的p": ["沪50 当月 万1 卖put", "沪300 当月 万1 卖put"],
+      "50 卖出 当月 万1 的p": ["沪50 当月 万1 卖put"],
+      "深500 卖出 万0.5 的p": ["深500 当月 万0.5 卖put"],
+      "500 买 下月 万1 的c": ["沪500 下月 万1 买call"],
+      "500 卖出 创业板当月各万0.5 的c": ["沪500 当月 万0.5 卖call", "创业板 当月 万0.5 卖call"],
+      "500 卖出 创业板当月万1 的c": ["沪500 当月 万1 卖call", "创业板 当月 万1 卖call"],
+      "买500 买 当月和下月 各万0.5 的c": ["沪500 当月 万0.5 买call", "沪500 下月 万0.5 买call"],
+      "创业板 卖出 当月和下月 万1 1.5 的p": ["创业板 当月 万1 卖put", "创业板 下月 万1.5 卖put"],
+      "500 卖  下月 万1 0.5的p": ["沪500 下月 万1 卖put", "深500 下月 万0.5 卖put"],
+      "创业板 下月 买万1的p": ["创业板 下月 万1 买put"],
+      "500 创业板 卖出  当月 万1 0.5 1 的c": ["沪500 当月 万1 卖call", "深500 当月 万0.5 卖call", "创业板 当月 万1 卖call"],
+      "IM 卖出 当月 千1 的c": ["IM 当月 千1 卖call"]
+    },
+    "additionalEdgeCases": {
+      "买入 50 万1 的c": ["沪50 当月 万1 买call"],
+      "卖 300 千0.5 的p": ["沪300 当月 千0.5 卖put"],
+      "80 买 隔季 万2 的c": ["科创80 隔季 万2 买call"],
+      "卖出 100 当月和下月 各千1 的p": ["深100 当月 千1 卖put", "深100 下月 千1 卖put"],
+      "科创50 科创80 买入 当月 万0.5 万1 的c": ["科创50 当月 万0.5 买call", "科创80 当月 万1 买call"],
+      "买 500 当月下月下季 万1 万0.5 万2 的p": ["沪500 当月 万1 买put", "沪500 下月 万0.5 买put", "沪500 下季 万2 买put"],
+      "IH IF IC 卖出 当月 万1 万0.5 万2 的c": ["IH 当月 万1 卖call", "IF 当月 万0.5 卖call", "IC 当月 万2 卖call"],
+      "深圳500 深圳300 买 当月 万1 万0.5 的p": ["深500 当月 万1 买put", "深300 当月 万0.5 买put"]
+    },
+    "errorScenarios": {
+      "500 万1 的c": "Error: Missing action (买/卖)",
+      "买 500 万1": "Error: Missing 的c/p indicator",
+      "买 万1 的c": "Error: Missing target",
+      "买 500 的c": "Error: Missing exposure"
+    }
+  },
+
+  "dualSideDelta": {
+    "description": "Delta-neutral strategies with directional bias adjustment",
+    "pattern": "[targets] 有买有卖 [调正/调负] [exposures] 的d",
+    "outputFormat": "{target} {month} {exposure} {option_type}",
+    "originalTestCases": {
+      "50  300  有买有卖调正万1 的d": ["沪50 当月 万1 call", "沪300 当月 万1 call"],
+      "50 有买有卖 调正 万1  的d": ["沪50 当月 万1 call"],
+      "500 有卖有买 调正万1  0.5 的d": ["沪500 当月 万1 call", "深500 当月 万0.5 call"],
+      "深圳300 下月有买有卖调正 万1 的d": ["深300 下月 万1 call"],
+      "500  有买有卖 调负万1  0.5 的d": ["沪500 当月 万1 put", "深500 当月 万0.5 put"],
+      "创业板 有买有卖 当月下月  调负 千1 0.5 的d": ["创业板 当月 千1 put", "创业板 下月 千0.5 put"],
+      "创业板当月下月 有买有卖 调负 各万1 的d": ["创业板 当月 万1 put", "创业板 下月 万1 put"],
+      "科创50 80 有买有卖调正万1 0.6 的d": ["科创50 当月 万1 call", "科创80 当月 万0.6 call"],
+      "IH 有卖有买 调正 万2 的d": ["IH 当月 万2 call"],
+      "科创50 80 有买有卖 调正 1 0.5份": ["科创50 当月 份1 call", "科创80 当月 份0.5 call"],
+      "科创50  有买有卖 调正 1份": ["科创50 当月 份1 call"],
+      "深圳300 下月有买有卖调负 1 份": ["深300 下月 份1 put"]
+    },
+    "additionalEdgeCases": {
+      "100 有买有卖 调正 万1 的d": ["深100 当月 万1 call"],
+      "500 有卖有买 调负 千0.5 的d": ["沪500 当月 千0.5 put"],
+      "创业板 有买有卖 隔季 调正 万2 的d": ["创业板 隔季 万2 call"],
+      "300 有买有卖 当月下月 调负 万1 万0.5 的d": ["沪300 当月 万1 put", "沪300 下月 万0.5 put"],
+      "科创50 科创80 有买有卖 当月 调正 万0.5 万1 的d": ["科创50 当月 万0.5 call", "科创80 当月 万1 call"],
+      "IF IC IM 有卖有买 当月 调负 万1 万0.5 万2 的d": ["IF 当月 万1 put", "IC 当月 万0.5 put", "IM 当月 万2 put"],
+      "500 有买有卖 当月下月下季 调正 各万1 的d": ["沪500 当月 万1 call", "沪500 下月 万1 call", "沪500 下季 万1 call"]
+    },
+    "errorScenarios": {
+      "500 调正 万1 的d": "Error: Missing 有买有卖/有卖有买",
+      "500 有买有卖 万1 的d": "Error: Missing 调正/调负",
+      "有买有卖 调正 万1 的d": "Error: Missing target",
+      "500 有买有卖 调正 的d": "Error: Missing exposure"
+    }
+  },
+
+  "fixedStrikeDelta": {
+    "description": "Specific strike price directional trades",
+    "pattern": "[action] [targets] [strike]c/p [exposures] 的d",
+    "outputFormat": "{target} {month} {exposure} {action} {option_symbol}",
+    "originalTestCases": {
+      "科创50 80 卖出  0.85p  万0.3的d": ["科创50 当月 万0.3 卖 put-0.85", "科创80 当月 万0.3 卖 put-0.85"],
+      "科创50  80 买    0.8c 万0.3 的d": ["科创50 当月 万0.3 买 call-0.8", "科创80 当月 万0.3 买 call-0.8"],
+      "科创50  80 卖出  当月   0.85p  万0.3 的d": ["科创50 当月 万0.3 卖 put-0.85", "科创80 当月 万0.3 卖 put-0.85"],
+      "科创50  80 卖出   0.85p  万0.2 的d下月": ["科创50 下月 万0.2 卖 put-0.85", "科创80 下月 万0.2 卖 put-0.85"],
+      "50 买  2.5c  万0.2 的d  下月": ["沪50 下月 万0.2 买 call-2.5"],
+      "深圳300 买   3.6p  万0.2 的d": ["深300 当月 万0.2 买 put-3.6"],
+      "500 买  5.5c  当月下月各万0.2 的d": ["沪500 当月 万0.2 买 call-5.5", "沪500 下月 万0.2 买 call-5.5"],
+      "卖 500  5.5c  万0.2 0.3 的d": ["沪500 当月 万0.2 卖 call-5.5", "深500 当月 万0.3 卖 call-5.5"],
+      "IH 卖 2450p 万2 的d": ["IH 当月 万2 卖 put-2450"],
+      "科创50 卖出 0.7c  0.75c 千0.3d": ["科创50 当月 千0.3 卖 call-0.7", "科创50 当月 千0.3 卖 call-0.75"],
+      "卖出科创50  0.7c  0.75c 万0.3  0.5 d": ["科创50 当月 万0.3 卖 call-0.7", "科创50 当月 万0.5 卖 call-0.75"]
+    },
+    "additionalEdgeCases": {
+      "买入 100 1.5p 万0.1 的d": ["深100 当月 万0.1 买 put-1.5"],
+      "卖 300 4.2c 千0.5 的d": ["沪300 当月 千0.5 卖 call-4.2"],
+      "创业板 买 0.95p 隔季 万1 的d": ["创业板 隔季 万1 买 put-0.95"],
+      "科创80 卖出 1.8c 当月下月 万0.2 万0.3 的d": ["科创80 当月 万0.2 卖 call-1.8", "科创80 下月 万0.3 卖 call-1.8"],
+      "500 买 3.5p 4.0p 当月 万0.1 万0.2 的d": ["沪500 当月 万0.1 买 put-3.5", "沪500 当月 万0.2 买 put-4.0"],
+      "IF 卖出 2300c 2350c 2400c 当月 万1 万0.5 万2 的d": ["IF 当月 万1 卖 call-2300", "IF 当月 万0.5 卖 call-2350", "IF 当月 万2 卖 call-2400"],
+      "深圳500 买 5.5c 当月下月下季 各万0.3 的d": ["深500 当月 万0.3 买 call-5.5", "深500 下月 万0.3 买 call-5.5", "深500 下季 万0.3 买 call-5.5"]
+    },
+    "errorScenarios": {
+      "500 买 万0.2 的d": "Error: Missing strike price",
+      "买 5.5c 万0.2 的d": "Error: Missing target",
+      "500 5.5c 万0.2 的d": "Error: Missing action",
+      "500 买 5.5c 的d": "Error: Missing exposure"
+    }
+  },
+
+  "clearPositions": {
+    "description": "Position closure operations with percentage specifications",
+    "pattern": "[targets] [strike]c/p [平/清] [percentage]",
+    "outputFormat": "{target} {month} {option_symbol} {action}{percentage}",
+    "originalTestCases": {
+      "科创50 80 0.85p  平20%": ["科创50 当月 put-0.85 平20%", "科创80 当月 put-0.85 平20%"],
+      "科创50  80   0.8c 平100%": ["科创50 当月 call-0.8 平100%", "科创80 当月 call-0.8 平100%"],
+      "科创50  80  当月   0.85p  清掉": ["科创50 当月 put-0.85 平100%", "科创80 当月 put-0.85 平100%"],
+      "科创50  80  0.85p  清仓下月": ["科创50 下月 put-0.85 平100%", "科创80 下月 put-0.85 平100%"],
+      "50  2.5c  清20%": ["沪50 当月 call-2.5 平20%"],
+      "300  当月 3.6p  平30% 50%": ["沪300 当月 put-3.6 平30%", "深300 当月 put-3.6 平50%"],
+      "500 深500 3.6p 平20% 30%": ["沪500 当月 put-3.6 平20%", "深500 当月 put-3.6 平30%"],
+      "500  5.5c  当月下月各清20%": ["沪500 当月 call-5.5 平20%", "沪500 下月 call-5.5 平20%"],
+      "500  5.5c  平20% 30%": ["沪500 当月 call-5.5 平20%", "深500 当月 call-5.5 平30%"],
+      "500 5.5p 当月下月 清20% 20%": ["沪500 当月 put-5.5 平20%", "沪500 下月 put-5.5 平20%"],
+      "500 5.5p 5.5c 清20% 30%": ["沪500 当月 put-5.5 平20%", "沪500 当月 call-5.5 平30%"],
+      "500 5.5p 5.5c 平20%": ["沪500 当月 put-5.5 平20%", "沪500 当月 call-5.5 平20%"],
+      "IH 2450p 平20%": ["IH 当月 put-2450 平20%"]
+    },
+    "additionalEdgeCases": {
+      "100 1.5c 清": ["深100 当月 call-1.5 平100%"],
+      "300 4.2p 平50%": ["沪300 当月 put-4.2 平50%"],
+      "创业板 0.95c 清掉": ["创业板 当月 call-0.95 平100%"],
+      "科创80 1.8p 隔季 平25%": ["科创80 隔季 put-1.8 平25%"],
+      "500 3.5c 4.0p 当月 平10% 20%": ["沪500 当月 call-3.5 平10%", "沪500 当月 put-4.0 平20%"],
+      "IF IC 2300c 当月 平15% 25%": ["IF 当月 call-2300 平15%", "IC 当月 call-2300 平25%"],
+      "深圳500 深圳300 5.5p 当月 清仓": ["深500 当月 put-5.5 平100%", "深300 当月 put-5.5 平100%"],
+      "科创50 科创80 0.8c 0.9p 平30% 40%": ["科创50 当月 call-0.8 平30%", "科创50 当月 put-0.9 平40%"],
+      "500 5.5c 当月下月下季 各平25%": ["沪500 当月 call-5.5 平25%", "沪500 下月 call-5.5 平25%", "沪500 下季 call-5.5 平25%"],
+      "IM 2500p 2550c 2600p 平20% 30% 40%": ["IM 当月 put-2500 平20%", "IM 当月 call-2550 平30%", "IM 当月 put-2600 平40%"]
+    },
+    "errorScenarios": {
+      "500 平20%": "Error: Missing strike price",
+      "5.5c 平20%": "Error: Missing target",
+      "500 5.5c": "Error: Missing 平/清 action",
+      "500 5.5c 平": "Auto-complete to 100%"
+    }
+  },
+
+  "commonEdgeCases": {
+    "description": "Edge cases that apply across multiple instruction types",
+    "missingComponents": {
+      "missingMonths": {
+        "input": "500 买 万1 的c",
+        "expected": ["沪500 当月 万1 买call"],
+        "note": "Default to 当月 when month not specified"
+      },
+      "extraSpaces": {
+        "input": "   500    买   万1   的c   ",
+        "expected": ["沪500 当月 万1 买call"],
+        "note": "Handle excessive whitespace gracefully"
+      }
+    },
+    "targetExpansion": {
+      "single300": {
+        "input": "300 买 万1 的c",
+        "expected": ["沪300 当月 万1 买call"],
+        "note": "Single target maps to 沪 variant"
+      },
+      "double500": {
+        "input": "500 买 万1 0.5 的c",
+        "expected": ["沪500 当月 万1 买call", "深500 当月 万0.5 买call"],
+        "note": "Target expansion when exposures > targets"
+      }
+    },
+    "unitVariations": {
+      "thousandUnit": {
+        "input": "500 买 千1 的c",
+        "expected": ["沪500 当月 千1 买call"],
+        "note": "Support for 千 (thousand) unit"
+      },
+      "shareUnit": {
+        "input": "科创50 有买有卖 调正 1份",
+        "expected": ["科创50 当月 份1 call"],
+        "note": "Support for 份 (shares) unit in dual-side delta"
+      }
+    },
+    "complexDistributions": {
+      "multipleTargetsMonths": {
+        "input": "科创50 科创80 买 当月下月 万0.5 万1 万0.3 万0.8 的c",
+        "note": "Complex distribution patterns requiring careful parsing"
+      },
+      "unevenArrays": {
+        "input": "500 买 当月下月下季 万1 万0.5 的c",
+        "expected": ["沪500 当月 万1 买call", "沪500 下月 万0.5 买call"],
+        "note": "Handle uneven array lengths gracefully"
+      }
+    }
+  },
+
+  "validationFramework": {
+    "description": "Framework for ensuring TypeScript-Python consistency",
+    "pythonValidationServer": {
+      "endpoint": "http://localhost:5000/validate",
+      "method": "POST",
+      "request": {
+        "instruction": "string",
+        "parser_type": "vega|single_delta|dual_delta|fixed_delta|clear"
+      },
+      "response": {
+        "success": "boolean",
+        "result": ["string"],
+        "errors": ["string"],
+        "execution_time_ms": "number"
+      }
+    },
+    "testScenarios": {
+      "accuracyTests": "All test cases must produce identical results",
+      "performanceTests": "TypeScript parsing must complete within 100ms",
+      "errorHandlingTests": "Error scenarios must be handled consistently",
+      "boundaryTests": "Edge cases and limits must be tested"
+    },
+    "cicdIntegration": {
+      "preCommitHook": "Run consistency tests before commit",
+      "buildPipeline": "Full test suite in CI/CD",
+      "deploymentGates": "Block deployment if tests fail",
+      "monitoring": "Track parsing accuracy in production"
+    }
+  },
+
+  "implementationGuidelines": {
+    "description": "Key guidelines for TypeScript implementation",
+    "criticalRequirements": [
+      "100% output compatibility with Python parsers",
+      "Support all 5 instruction types",
+      "Handle all edge cases and error conditions",
+      "Maintain performance under 100ms per instruction",
+      "Provide structured error messages",
+      "Support real-time parsing for UI preview"
+    ],
+    "codeStructure": {
+      "baseParser": "Abstract base class with shared logic",
+      "specificParsers": "One parser class per instruction type",
+      "targetMapping": "Shared target expansion utilities",
+      "validation": "Common validation and error handling",
+      "testing": "Comprehensive test suite with Python comparison"
+    },
+    "performanceOptimizations": [
+      "Compile regex patterns once",
+      "Use efficient array operations",
+      "Minimize string allocations",
+      "Cache frequent target mappings",
+      "Implement fast-fail validation"
+    ]
+  }
+}
