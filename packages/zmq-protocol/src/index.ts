@@ -114,6 +114,18 @@ export interface AuthLoginResponse {
   expiresAt: string;
 }
 
+export interface AuthResponse {
+  success: boolean;
+  userId?: string;
+  username?: string;
+  sessionId?: string;
+  permissions?: string[];
+  expiresAt?: string;
+  token?: string;
+  message?: string;
+  error?: string;
+}
+
 export interface AuthValidateRequest {
   sessionId: string;
 }
@@ -127,6 +139,15 @@ export interface AuthValidateResponse {
 // ============================================================================
 // Account Service Types
 // ============================================================================
+
+export enum AccountStatus {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive', 
+  ONLINE = 'online',
+  OFFLINE = 'offline',
+  ERROR = 'error',
+  MAINTENANCE = 'maintenance'
+}
 
 export interface AccountListRequest {
   userId: string;
@@ -148,6 +169,24 @@ export interface AccountPositionsRequest {
 // Algorithm Service Types
 // ============================================================================
 
+export enum AlgorithmStatus {
+  IDLE = 'idle',
+  PENDING = 'pending',
+  RUNNING = 'running',
+  PAUSED = 'paused',
+  COMPLETED = 'completed',
+  ERROR = 'error',
+  STOPPED = 'stopped'
+}
+
+export enum AlgorithmCommand {
+  START = 'start',
+  PAUSE = 'pause',
+  CONTINUE = 'continue',
+  STOP = 'stop',
+  END = 'end'
+}
+
 export interface AlgorithmListRequest {
   userId: string;
   portfolioId?: string;
@@ -162,13 +201,61 @@ export interface AlgorithmStatusRequest {
 export interface AlgorithmControlRequest {
   userId: string;
   algorithmId: string;
-  action: 'pause' | 'continue' | 'stop' | 'end';
+  action: AlgorithmCommand;
   reason?: string;
 }
 
 // ============================================================================
 // Instruction Service Types
 // ============================================================================
+
+export enum InstructionType {
+  VEGA = 'vega',
+  DELTA_SINGLE = 'delta_single', 
+  DELTA_DUAL = 'delta_dual',
+  DELTA_FIXED = 'delta_fixed',
+  CLEAR = 'clear'
+}
+
+export interface ParsedInstruction {
+  id: string;
+  type: InstructionType;
+  originalText: string;
+  parsedComponents: any;
+  accounts: string[];
+  timestamp: string;
+}
+
+export interface VegaInstruction extends ParsedInstruction {
+  type: InstructionType.VEGA;
+  parsedComponents: {
+    direction: '双买' | '双卖';
+    underlying: string;
+    month: string;
+    exposure: string;
+  };
+}
+
+export interface DeltaInstruction extends ParsedInstruction {
+  type: InstructionType.DELTA_SINGLE | InstructionType.DELTA_DUAL | InstructionType.DELTA_FIXED;
+  parsedComponents: {
+    direction: string;
+    underlying: string;
+    month: string;
+    exposure: string;
+    optionType?: 'call' | 'put';
+  };
+}
+
+export interface ClearInstruction extends ParsedInstruction {
+  type: InstructionType.CLEAR;
+  parsedComponents: {
+    underlying: string;
+    strikePrice: string;
+    optionType: 'call' | 'put';
+    percentage: string;
+  };
+}
 
 export interface InstructionParseRequest {
   userId: string;
