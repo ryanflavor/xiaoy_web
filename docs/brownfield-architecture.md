@@ -70,8 +70,8 @@
 
 | Category           | Current Technology | Version     | Usage in Enhancement | Notes     |
 | :----------------- | :----------------- | :---------- | :------------------- | :-------- |
-| **Language**       | Python             | 3.8+        | API网关Python子进程 | 后端主语言 |
-| **Runtime**        | CPython            | 3.8+        | ZMQ协议处理         | 保持兼容性 |
+| **Language**       | Python             | 3.10+       | API网关Python子进程 | 后端主语言 |
+| **Runtime**        | CPython            | 3.10+       | ZMQ协议处理         | 保持兼容性 |
 | **Framework**      | vnpy               | Latest      | 通过API网关调用     | 交易核心框架 |
 | **Database**       | MySQL + MongoDB    | Latest      | 服务层间接访问       | 混合存储架构 |
 | **API Style**      | ZMQ RPC            | Latest      | API网关适配层       | 现有通信协议 |

@@ -8,7 +8,7 @@
 - **npm**: v9+
 - **Git**: Latest version
 - **Docker**: Latest version
-- **Python**: v3.8+ (for ZMQ integration)
+- **Python**: v3.10+ (for ZMQ integration)
 
 **System Requirements:** 8GB+ RAM, 10GB storage
 

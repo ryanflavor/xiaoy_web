@@ -81,7 +81,7 @@ xiaoy_web/
 
 - Node.js 18+ LTS
 - npm 9+
-- Python 3.8+ (for backend integration testing)
+- Python 3.10+ (for backend integration testing)
 
 ### Development Scripts
 
