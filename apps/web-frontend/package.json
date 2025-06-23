@@ -47,7 +47,7 @@
     "@xiaoy/shared-types": "*",
     "autoprefixer": "^10.4.0",
     "eslint": "^8",
-    "eslint-config-next": "14.1.0",
+    "eslint-config-next": "15.3.4",
     "postcss": "^8",
     "tailwindcss": "^3.4.0",
     "typescript": "^5"
