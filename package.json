@@ -11,7 +11,11 @@
     "test": "turbo test",
     "type-check": "turbo type-check",
     "clean": "turbo clean",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "validate:env": "node tools/scripts/validate-environment.js",
+    "test:hot-reload": "node tools/scripts/test-hot-reload.js",
+    "dev:validate": "npm run validate:env && npm run dev",
+    "setup": "npm install && npm run validate:env"
   },
   "workspaces": [
     "apps/*",

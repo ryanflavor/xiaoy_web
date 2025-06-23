@@ -1,0 +1,123 @@
+version: 2
+updates:
+  # Root package.json
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "xiaoy-team"
+    assignees:
+      - "xiaoy-team"
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "automated"
+
+  # API Gateway
+  - package-ecosystem: "npm"
+    directory: "/apps/api-gateway"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "xiaoy-team"
+    commit-message:
+      prefix: "deps(api-gateway)"
+      prefix-development: "deps-dev(api-gateway)"
+    labels:
+      - "dependencies"
+      - "api-gateway"
+      - "automated"
+
+  # Web Frontend
+  - package-ecosystem: "npm"
+    directory: "/apps/web-frontend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "xiaoy-team"
+    commit-message:
+      prefix: "deps(web-frontend)"
+      prefix-development: "deps-dev(web-frontend)"
+    labels:
+      - "dependencies"
+      - "web-frontend"
+      - "automated"
+
+  # Shared packages
+  - package-ecosystem: "npm"
+    directory: "/packages/shared-types"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "shared-packages"
+
+  - package-ecosystem: "npm"
+    directory: "/packages/instruction-parser"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "shared-packages"
+
+  - package-ecosystem: "npm"
+    directory: "/packages/zmq-protocol"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "shared-packages"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "ci"
+    labels:
+      - "ci/cd"
+      - "automated"
+
+  # Docker
+  - package-ecosystem: "docker"
+    directory: "/apps/api-gateway"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "docker(api-gateway)"
+    labels:
+      - "docker"
+      - "api-gateway"
+
+  - package-ecosystem: "docker"
+    directory: "/apps/web-frontend"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "docker(web-frontend)"
+    labels:
+      - "docker"
+      - "web-frontend"
