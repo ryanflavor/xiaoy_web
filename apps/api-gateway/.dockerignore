@@ -47,7 +47,5 @@ logs/
 README.md
 docs/
 
-# Development files
-src/
-tsconfig.json
+# Development files (keep src/ and tsconfig.json for Docker build)
 .eslintrc.js

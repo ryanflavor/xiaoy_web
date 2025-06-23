@@ -5,21 +5,24 @@ FROM node:20-alpine AS builder
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Copy root package files
+# Copy root package files for workspace
 COPY package*.json ./
+COPY package-lock.json ./
 COPY turbo.json ./
-
-# Copy app and packages
-COPY apps/web-frontend ./apps/web-frontend
-COPY packages ./packages
 COPY tsconfig.json ./
+
+# Copy packages (dependencies)
+COPY packages/ ./packages/
+
+# Copy web-frontend app
+COPY apps/web-frontend/ ./apps/web-frontend/
 
 # Install dependencies
 RUN npm ci
 
 # Build the application
 ENV NEXT_TELEMETRY_DISABLED 1
-RUN npm run build -- --filter=@xiaoy/web-frontend
+RUN npm run build --filter=@xiaoy/web-frontend
 
 # Production Stage
 FROM node:20-alpine AS runner

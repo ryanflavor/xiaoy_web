@@ -6,18 +6,23 @@ FROM node:18-alpine AS builder
 # Set working directory
 WORKDIR /app
 
-# Copy package files
+# Copy root package files for workspace
 COPY package*.json ./
+COPY package-lock.json ./
+COPY turbo.json ./
 COPY tsconfig.json ./
 
-# Copy source code
-COPY src/ ./src/
+# Copy packages (dependencies)
+COPY packages/ ./packages/
+
+# Copy api-gateway app
+COPY apps/api-gateway/ ./apps/api-gateway/
 
 # Install dependencies (including dev dependencies for build)
 RUN npm ci
 
-# Build the application
-RUN npm run build
+# Build the api-gateway
+RUN npm run build --filter=@xiaoy/api-gateway
 
 # Stage 2: Production stage
 FROM node:18-alpine AS production
@@ -33,16 +38,19 @@ RUN addgroup -g 1001 -S nodejs && \
     adduser -S apigateway -u 1001
 
 # Copy package files
-COPY package*.json ./
+COPY apps/api-gateway/package*.json ./
 
 # Install only production dependencies
-RUN npm ci --only=production && npm cache clean --force
+RUN npm install --only=production && npm cache clean --force
 
 # Copy built application from builder stage
-COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/apps/api-gateway/dist ./dist
 
 # Copy environment example (can be overridden at runtime)
-COPY .env.example ./
+COPY apps/api-gateway/.env.example ./.env.example
+
+# Copy Python scripts for ZMQ integration
+COPY apps/api-gateway/python-scripts ./python-scripts
 
 # Create necessary directories
 RUN mkdir -p /app/python-scripts && \
