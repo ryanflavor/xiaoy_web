@@ -36,9 +36,8 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=builder /app/apps/web-frontend/.next/standalone ./
 COPY --from=builder /app/apps/web-frontend/.next/static ./apps/web-frontend/.next/static
 
-# Copy public directory (create if empty)
-RUN mkdir -p ./apps/web-frontend/public
-COPY --from=builder /app/apps/web-frontend/public/ ./apps/web-frontend/public/
+# Copy public directory
+COPY --from=builder /app/apps/web-frontend/public ./apps/web-frontend/public
 
 # Set ownership to non-root user
 RUN chown -R nextjs:nodejs /app
