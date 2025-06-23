@@ -2,8 +2,25 @@ import { BaseMockWorker } from './base-mock-worker';
 import { Logger } from 'pino';
 import { AlgorithmStatus, AlgorithmCommand } from '@xiaoy/zmq-protocol';
 
+interface MockAlgorithm {
+  id: string;
+  portfolio_id: string;
+  name: string;
+  status: AlgorithmStatus;
+  progress: number;
+  account_progress: Record<string, number>;
+  start_time: number;
+  end_time?: number;
+  stats?: {
+    ordersExecuted: number;
+    ordersSuccessful: number;
+    ordersFailed: number;
+    totalVolume: number;
+  };
+}
+
 export class MockAlgorithmWorker extends BaseMockWorker {
-  private mockAlgorithms = [
+  private mockAlgorithms: MockAlgorithm[] = [
     {
       id: 'algo1',
       portfolio_id: 'portfolio1',

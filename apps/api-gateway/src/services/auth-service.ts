@@ -51,16 +51,14 @@ export class AuthService extends BaseService {
 
       const token = jwt.sign(tokenPayload, this.jwtSecret, {
         expiresIn: this.jwtExpiresIn,
-      });
+      } as jwt.SignOptions);
 
       return {
         success: true,
         token,
-        user: {
-          id: tokenPayload.userId,
-          username: tokenPayload.username,
-          permissions: tokenPayload.permissions,
-        },
+        userId: tokenPayload.userId,
+        username: tokenPayload.username,
+        permissions: tokenPayload.permissions,
       };
     } catch (error) {
       this.logger.error({ error, username: request.username }, 'Login failed');
@@ -118,16 +116,14 @@ export class AuthService extends BaseService {
 
       const token = jwt.sign(newPayload, this.jwtSecret, {
         expiresIn: this.jwtExpiresIn,
-      });
+      } as jwt.SignOptions);
 
       return {
         success: true,
         token,
-        user: {
-          id: newPayload.userId,
-          username: newPayload.username,
-          permissions: newPayload.permissions,
-        },
+        userId: newPayload.userId,
+        username: newPayload.username,
+        permissions: newPayload.permissions,
       };
     } catch (error) {
       this.logger.error({ error, userId: payload.userId }, 'Token refresh failed');

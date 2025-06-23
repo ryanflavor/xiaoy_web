@@ -6,7 +6,7 @@ import { EventEmitter } from 'events';
 interface Worker {
   id: string;
   service: string;
-  socket: zmq.Dealer;
+  socket: zmq.Router;
   lastHeartbeat: number;
 }
 

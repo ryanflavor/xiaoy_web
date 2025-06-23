@@ -101,12 +101,12 @@ server.setNotFoundHandler(async (request, reply) => {
 async function initializeServices() {
   try {
     // Start mock broker if in development mode
-    if (config.USE_MOCK_ZMQ === 'true') {
+    if (config.USE_MOCK_ZMQ === true) {
       server.log.info('Starting mock ZMQ broker...');
       mockBroker = new MockZMQBroker(
         config.ZMQ_BROKER_URL,
         'tcp://localhost:5556',
-        server.log
+        server.log as any
       );
       await mockBroker.start();
       server.log.info('Mock ZMQ broker started');
@@ -129,7 +129,7 @@ async function initializeServices() {
           jwtExpiresIn: config.JWT_EXPIRES_IN,
         },
       },
-      server.log
+      server.log as any
     );
 
     // Start services
@@ -178,14 +178,14 @@ async function registerPluginsAndRoutes() {
 function initializeSocketIO() {
   io = new SocketIOServer(server.server, {
     cors: {
-      origin: config.CORS_ORIGIN?.split(',') || ['http://localhost:3000'],
+      origin: config.CORS_ORIGINS?.split(',') || ['http://localhost:3000'],
       credentials: true,
     },
     path: '/socket.io/',
   });
 
   // Register socket handlers
-  registerSocketHandlers(io, serviceManager, server.log);
+  registerSocketHandlers(io, serviceManager, server.log as any);
   
   server.log.info('Socket.IO initialized');
 }
@@ -260,7 +260,7 @@ async function start() {
       host: config.HOST,
       environment: config.NODE_ENV,
       nodeVersion: process.version,
-      useMockZMQ: config.USE_MOCK_ZMQ === 'true',
+      useMockZMQ: config.USE_MOCK_ZMQ === true,
     }, 'API Gateway server started successfully');
     
     // Health check on startup

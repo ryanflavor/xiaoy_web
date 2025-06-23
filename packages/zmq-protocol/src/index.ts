@@ -165,6 +165,24 @@ export interface AccountPositionsRequest {
   symbol?: string;
 }
 
+export interface AccountPosition {
+  symbol: string;
+  quantity: number;
+  averagePrice: number;
+  currentPrice: number;
+  unrealizedPnL: number;
+  realizedPnL: number;
+  marketValue: number;
+}
+
+export interface AccountRisk {
+  totalExposure: number;
+  maxExposure: number;
+  riskLevel: 'low' | 'medium' | 'high';
+  marginUsage: number;
+  warnings: string[];
+}
+
 // ============================================================================
 // Algorithm Service Types
 // ============================================================================

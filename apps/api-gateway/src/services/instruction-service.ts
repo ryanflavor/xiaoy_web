@@ -175,41 +175,50 @@ export class InstructionService extends BaseService {
 
   private validateVegaInstruction(inst: any): VegaInstruction {
     return {
+      id: inst.id || `inst_${Date.now()}`,
       type: InstructionType.VEGA,
-      raw: inst.raw,
-      parsed: inst.parsed,
-      target: inst.target,
-      month: inst.month,
-      exposure: inst.exposure,
-      direction: inst.direction,
-      contracts: inst.contracts || [],
+      originalText: inst.raw || inst.originalText || '',
+      parsedComponents: {
+        direction: inst.direction,
+        underlying: inst.target,
+        month: inst.month,
+        exposure: inst.exposure,
+      },
+      accounts: inst.accounts || [],
+      timestamp: inst.timestamp || new Date().toISOString(),
     };
   }
 
   private validateDeltaInstruction(inst: any): DeltaInstruction {
     return {
+      id: inst.id || `inst_${Date.now()}`,
       type: inst.type,
-      raw: inst.raw,
-      parsed: inst.parsed,
-      target: inst.target,
-      month: inst.month,
-      exposure: inst.exposure,
-      optionType: inst.optionType || inst.option_type,
-      direction: inst.direction,
-      contracts: inst.contracts || [],
+      originalText: inst.raw || inst.originalText || '',
+      parsedComponents: {
+        direction: inst.direction,
+        underlying: inst.target,
+        month: inst.month,
+        exposure: inst.exposure,
+        optionType: inst.optionType || inst.option_type,
+      },
+      accounts: inst.accounts || [],
+      timestamp: inst.timestamp || new Date().toISOString(),
     };
   }
 
   private validateClearInstruction(inst: any): ClearInstruction {
     return {
+      id: inst.id || `inst_${Date.now()}`,
       type: InstructionType.CLEAR,
-      raw: inst.raw,
-      parsed: inst.parsed,
-      target: inst.target,
-      strike: inst.strike,
-      optionType: inst.optionType || inst.option_type,
-      percentage: inst.percentage,
-      contracts: inst.contracts || [],
+      originalText: inst.raw || inst.originalText || '',
+      parsedComponents: {
+        underlying: inst.target,
+        strikePrice: inst.strike,
+        optionType: inst.optionType || inst.option_type,
+        percentage: inst.percentage,
+      },
+      accounts: inst.accounts || [],
+      timestamp: inst.timestamp || new Date().toISOString(),
     };
   }
 }

@@ -90,7 +90,7 @@ export class ZMQClientManager extends EventEmitter {
 
     // Reject all pending requests
     for (const [id, request] of this.requests) {
-      request.reject(new ZMQProtocolError('Client shutting down'));
+      request.reject(new ZMQProtocolError('Client shutting down', 'CLIENT_SHUTDOWN'));
     }
     this.requests.clear();
     this.requestQueue = [];
@@ -124,7 +124,7 @@ export class ZMQClientManager extends EventEmitter {
     kwargs: Record<string, any> = {}
   ): Promise<any> {
     if (!this.active) {
-      throw new ZMQProtocolError('Client is not active');
+      throw new ZMQProtocolError('Client is not active', 'CLIENT_INACTIVE');
     }
 
     const requestId = uuidv4();
@@ -154,7 +154,7 @@ export class ZMQClientManager extends EventEmitter {
       setTimeout(() => {
         if (this.requests.has(requestId)) {
           this.requests.delete(requestId);
-          reject(new ZMQTimeoutError(`Request ${requestId} timed out after ${this.config.timeout}ms`));
+          reject(new ZMQTimeoutError(requestId, this.config.timeout));
         }
       }, this.config.timeout);
     });
@@ -246,19 +246,19 @@ export class ZMQClientManager extends EventEmitter {
         if (success) {
           request.resolve(data);
         } else {
-          request.reject(new ZMQProtocolError(`RPC call failed: ${data}`));
+          request.reject(new ZMQProtocolError(`RPC call failed: ${data}`, 'RPC_FAILED'));
         }
       } else {
         request.resolve(result);
       }
     } catch (error) {
-      request.reject(new ZMQProtocolError('Failed to deserialize reply', error as Error));
+      request.reject(new ZMQProtocolError('Failed to deserialize reply', 'DESERIALIZATION_ERROR', error));
     }
   }
 
   private async sendRequest(request: ZMQRequest): Promise<void> {
     if (!this.client || !this.connected) {
-      throw new ZMQProtocolError('Not connected to broker');
+      throw new ZMQProtocolError('Not connected to broker', 'NOT_CONNECTED');
     }
 
     // Build the request payload following the Python RpcClient format
@@ -357,7 +357,7 @@ export class ZMQClientManager extends EventEmitter {
       for (const [id, request] of this.requests) {
         if (now - request.timestamp > this.config.timeout) {
           this.requests.delete(id);
-          request.reject(new ZMQTimeoutError(`Request ${id} timed out`));
+          request.reject(new ZMQTimeoutError(id, this.config.timeout));
         }
       }
     }, 1000);

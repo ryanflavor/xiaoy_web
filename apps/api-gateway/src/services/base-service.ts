@@ -52,7 +52,8 @@ export abstract class BaseService {
       
       throw new ZMQProtocolError(
         `Failed to call ${this.serviceName}.${method}`,
-        error as Error
+        'SERVICE_CALL_FAILED',
+        error
       );
     }
   }
