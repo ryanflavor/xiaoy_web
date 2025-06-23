@@ -22,7 +22,7 @@
     "@fastify/rate-limit": "^9.1.0",
     "@xiaoy/shared-types": "file:../../packages/shared-types",
     "@xiaoy/zmq-protocol": "file:../../packages/zmq-protocol",
-    "fastify": "^4.26.2",
+    "fastify": "^5.4.0",
     "jsonwebtoken": "^9.0.2",
     "pino": "^8.19.0",
     "python-shell": "^5.0.0",
