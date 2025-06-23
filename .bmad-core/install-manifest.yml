@@ -1,13 +1,19 @@
-version: 4.10.3
-installed_at: '2025-06-20T14:05:43.680Z'
+version: 4.12.0
+installed_at: '2025-06-23T03:07:00.040Z'
 install_type: full
 agent: null
 ide_setup: null
 ides_setup:
   - claude-code
 files:
+  - path: .bmad-core/install-manifest.yml
+    hash: 6046d35c3edf4bc7
+    modified: false
+  - path: .bmad-core/core-config.yml.bak
+    hash: 9a69b0cde4143f4e
+    modified: false
   - path: .bmad-core/core-config.yml
-    hash: b8f61aa2a889dffd
+    hash: 8ccd25183820a4a9
     modified: false
   - path: .bmad-core/workflows/greenfield-ui.yml
     hash: 6dd40911ddead1d7
@@ -73,7 +79,7 @@ files:
     hash: b8daeb43d0196ee1
     modified: false
   - path: .bmad-core/tasks/shard-doc.md
-    hash: bf68bd6c69da43b5
+    hash: 0a04158f420a09df
     modified: false
   - path: .bmad-core/tasks/kb-mode-interaction.md
     hash: 97623a1fbcb686e4
@@ -94,7 +100,7 @@ files:
     hash: 6a86e5d9cd386452
     modified: false
   - path: .bmad-core/tasks/create-next-story.md
-    hash: 3725f8cf5a9a0c32
+    hash: be7699b750a382e3
     modified: false
   - path: .bmad-core/tasks/create-doc.md
     hash: 63ef4f97bfd66c1b
@@ -160,7 +166,7 @@ files:
     hash: 40f796bdefcd14c6
     modified: false
   - path: .bmad-core/agents/dev.md
-    hash: a7ae3b363320af28
+    hash: ed0fd38c33b6bf40
     modified: false
   - path: .bmad-core/agents/bmad-orchestrator.md
     hash: c26017d6501d2e06
