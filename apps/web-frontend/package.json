@@ -43,7 +43,7 @@
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react-dom": "^19",
     "@xiaoy/shared-types": "*",
     "autoprefixer": "^10.4.0",
     "eslint": "^8",
