@@ -1,7 +1,7 @@
 # Multi-stage Docker build for API Gateway
 
 # Stage 1: Build stage
-FROM node:18-alpine AS builder
+FROM node:24-alpine AS builder
 
 # Set working directory
 WORKDIR /app
@@ -25,7 +25,7 @@ RUN npm ci
 RUN npm run build --filter=@xiaoy/api-gateway
 
 # Stage 2: Production stage
-FROM node:18-alpine AS production
+FROM node:24-alpine AS production
 
 # Install Python for ZMQ integration (required for python-shell)
 RUN apk add --no-cache python3 py3-pip
